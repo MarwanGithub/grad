@@ -1,0 +1,111 @@
+{% extends 'voting/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center" style="font-size: 24px; font-weight: 600; color: black;">Candidate details</h2>
+
+    <div class="candidate-profile">
+        <img src="{{ candidate.image.url }}" alt="Candidate photo" class="candidate-image">
+        <h3 class="candidate-name">{{ candidate.name }}</h3>
+        <p class="candidate-description">{{ candidate.description }}</p>
+
+        <!-- زر التصويت -->
+        <button class="vote-btn" onclick="showOTPInputs()">Vote for this Candidate</button>
+
+        <!-- حقول إدخال الأكواد -->
+        <div id="otpContainer" class="otp-container">
+            <label>Google Authentication Code</label>
+            <input type="text" id="googleOtpInput" placeholder="Enter Google Auth Code">
+
+            <label>Gmail Verification Code</label>
+            <input type="text" id="gmailOtpInput" placeholder="Enter Gmail Code">
+
+            <button class="submit-btn" onclick="submitOTP()">Submit</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .candidate-profile {
+        text-align: center;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        max-width: 500px;
+        margin: auto;
+    }
+    .candidate-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+    .candidate-name {
+        font-size: 22px;
+        font-weight: bold;
+        color: black;
+    }
+    .candidate-description {
+        font-size: 16px;
+        color: #333;
+    }
+    /* زر التصويت وزر الإرسال */
+    .vote-btn, .submit-btn {
+        display: inline-block;
+        background: white;
+        color: black;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+        border: 2px solid black;
+        margin-top: 10px;
+        transition: 0.3s;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .vote-btn:hover, .submit-btn:hover {
+        background: #ccc;
+        border: 2px solid #aaa;
+    }
+    .otp-container {
+        display: none;
+        margin-top: 15px;
+        text-align: left;
+    }
+    label {
+        font-size: 14px;
+        font-weight: bold;
+        color: #555;
+        display: block;
+        margin-top: 10px;
+    }
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+</style>
+
+<script>
+    function showOTPInputs() {
+        document.getElementById("otpContainer").style.display = "block";
+    }
+
+    function submitOTP() {
+        let googleOtp = document.getElementById("googleOtpInput").value;
+        let gmailOtp = document.getElementById("gmailOtpInput").value;
+
+        if (googleOtp && gmailOtp) {
+            let voteBtn = document.querySelector(".vote-btn");
+            voteBtn.innerText = "Voted";
+            document.getElementById("otpContainer").style.display = "none";
+        } else {
+            alert("Please enter both codes!");
+        }
+    }
+</script>
+{% endblock %}
