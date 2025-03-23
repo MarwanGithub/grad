@@ -152,3 +152,20 @@ AUTHENTICATION_BACKENDS = [
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 AUTH_USER_MODEL = "voting.CustomUser"
+# settings.py
+import os
+from dotenv import load_dotenv
+from web3 import Web3
+
+load_dotenv()  # Loads variables from .env file
+
+# Infura Polygon RPC URL (replace YOUR_INFURA_PROJECT_ID with your .env value)
+INFURA_URL = f"https://polygon-mainnet.infura.io/v3/982333c3771f4b48adb4f518098a444b"
+
+# Connect to Polygon network
+WEB3 = Web3(Web3.HTTPProvider(INFURA_URL))
+
+if WEB3.is_connected():
+    print("Connected to Polygon via Infura")
+else:
+    print("Failed to connect to Polygon")
